@@ -1,0 +1,40 @@
+{
+    "name": "progrmanial/fast-sql",
+    "type": "library",
+    "description": "A secure and flexible PHP class for generating SQL queries.",
+    "keywords": ["sql", "database", "query", "security"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Imran Saadullah",
+            "email": "imransaadullah@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "progrmanial\\FASTSQL\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/your/repo.git"
+        }
+    ],
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    }
+}
+
