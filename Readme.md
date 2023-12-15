@@ -4,11 +4,11 @@ fast-sql is a PHP class designed to provide a secure and flexible way to generat
 
 ## Installation
 
-You can install SecureSQLGenerator using Composer. Add the following to your `composer.json` file:
+You can install fast-sql using Composer. Add the following to your `composer.json` file:
 
 ```json
 {
-    "require": {
+    "require": {    
         "progrmanial/fast-sql": "dev-master"
     }
 }
@@ -25,7 +25,7 @@ composer install
 ```php
 <?php
 
-use Your\Namespace\SecureSQLGenerator;
+use progrmanial\FASTSQL\SecureSQLGenerator;
 use PDO;
 
 // Create a PDO instance for database connection
@@ -53,7 +53,6 @@ $result = $sqlGenerator
     ->innerJoin('orders', ['users.id' => 'orders.user_id'])
     ->execute();
 
-// ... (more examples)
 
 ```
 
