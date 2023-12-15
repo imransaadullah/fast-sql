@@ -1,5 +1,6 @@
 <?php
 
+namespace FASTSQL;
 /**
  * Class SecureSQLGenerator
  *
