@@ -1,6 +1,6 @@
-# SecureSQLGenerator
+# fast-sql
 
-SecureSQLGenerator is a PHP class designed to provide a secure and flexible way to generate SQL queries. It supports various SQL operations, parameter binding to prevent SQL injection, transactions, and caching for improved performance.
+fast-sql is a PHP class designed to provide a secure and flexible way to generate SQL queries. It supports various SQL operations, parameter binding to prevent SQL injection, transactions, and caching for improved performance.
 
 ## Installation
 
