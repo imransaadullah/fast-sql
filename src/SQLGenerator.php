@@ -450,33 +450,3 @@ class SecureSQLGenerator
         return md5($this->query . json_encode($this->params));
     }
 }
-
-// Example usage:
-
-$pdo = new PDO('mysql:host=localhost;dbname=test', 'username', 'password');
-$secureSqlGenerator = new SecureSQLGenerator($pdo);
-
-// Build a secure query
-$secureQuery = $secureSqlGenerator
-    ->select('id, username')
-    ->from('users')
-    ->where(['id' => 1])
-    ->orderBy('username', 'DESC')
-    ->limit(10);
-
-// Get the generated query and parameters
-$query = $secureQuery->getQuery();
-$params = $secureQuery->getParams();
-
-// Execute the query separately using a different class or part of your application
-$statement = $pdo->prepare($query);
-$statement->execute($params);
-
-// Fetch results
-$results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-// Process results as needed
-foreach ($results as $row) {
-    // Process each row of data
-    echo implode(', ', $row) . PHP_EOL;
-}
