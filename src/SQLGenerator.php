@@ -48,7 +48,7 @@ class SecureSQLGenerator
      *
      * @param PDO $pdo The PDO instance for database connection.
      */
-    public function __construct(PDO $pdo)
+    public function __construct(\PDO $pdo)
     {
         $this->pdo = $pdo;
         $this->clearQuery();
@@ -310,7 +310,7 @@ class SecureSQLGenerator
         try {
             $statement = $this->pdo->prepare($this->query);
             $statement->execute($this->params);
-            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
             if ($useCache) {
                 $this->cache[$cacheKey] = $result;
@@ -318,7 +318,7 @@ class SecureSQLGenerator
 
             $this->clearQuery();
             return $result;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->rollback(); 
             throw $e;
         }
