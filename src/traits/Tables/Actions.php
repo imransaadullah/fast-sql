@@ -190,7 +190,20 @@ trait Actions{
     }
 
     public function createTableStatement() {
-        $sql = "CREATE TABLE {$this->tableName} (";
+        $sql = "CREATE";
+
+        if ($this->temporary) {
+            $sql .= " TEMPORARY";
+        }
+
+        $sql .= " TABLE";
+
+        if ($this->ifNotExists) {
+            $sql .= " IF NOT EXISTS";
+        }
+
+        $sql .= " {$this->tableName} (";
+
         $fieldStatements = array();
 
         foreach ($this->fields as $field) {
