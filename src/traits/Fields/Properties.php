@@ -382,8 +382,38 @@ trait Properties {
      *
      * @return $this
      */
+    public function tinyText() {
+        $this->setType("TINYTEXT");
+        return $this;
+    }
+
+    /**
+     * Set the field as a text.
+     *
+     * @return $this
+     */
     public function text() {
         $this->setType("TEXT");
+        return $this;
+    }
+
+    /**
+     * Set the field as a text.
+     *
+     * @return $this
+     */
+    public function mediumText() {
+        $this->setType("MEDIUMTEXT");
+        return $this;
+    }
+
+    /**
+     * Set the field as a text.
+     *
+     * @return $this
+     */
+    public function largeText() {
+        $this->setType("LONGTEXT");
         return $this;
     }
 
