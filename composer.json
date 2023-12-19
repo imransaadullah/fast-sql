@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "progrmanial\\FASTSQL\\": "src/"
+            "FASTSQL\\": "src/"
         }
     },
     "repositories": [
