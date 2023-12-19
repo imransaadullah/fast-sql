@@ -144,7 +144,7 @@ trait Actions{
         return $this;
     }
 
-    public function renameTableStatement() {
+    public function getRenameTableStatement() {
         if (isset($this->newTableName)) {
             return "ALTER TABLE {$this->tableName} RENAME TO {$this->newTableName};";
         }
@@ -163,7 +163,7 @@ trait Actions{
         return "";
     }
 
-    public function alterTableStatement() {
+    public function getAlterTableStatement() {
         $sql = "ALTER TABLE {$this->tableName}";
 
         if (isset($this->engine)) {
@@ -185,11 +185,11 @@ trait Actions{
         return $sql;
     }
 
-    public function dropTableStatement() {
+    public function getDropTableStatement() {
         return "DROP TABLE IF EXISTS {$this->tableName};";
     }
 
-    public function createTableStatement() {
+    public function getCreateTableStatement() {
         $sql = "CREATE";
 
         if ($this->temporary) {
@@ -247,7 +247,7 @@ trait Actions{
         return $sql;
     }
 
-    public function createIndexStatements() {
+    public function getCreateIndexStatements() {
         $sql = "";
         foreach ($this->indexes as $index) {
             $indexName = isset($index['name']) ? $index['name'] : null;
