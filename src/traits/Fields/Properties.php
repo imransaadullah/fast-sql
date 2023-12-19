@@ -378,7 +378,7 @@ trait Properties {
     }
 
     /**
-     * Set the field as a text.
+     * Set the field as a tinytext.
      *
      * @return $this
      */
@@ -398,7 +398,7 @@ trait Properties {
     }
 
     /**
-     * Set the field as a text.
+     * Set the field as a mediumtext.
      *
      * @return $this
      */
@@ -408,7 +408,7 @@ trait Properties {
     }
 
     /**
-     * Set the field as a text.
+     * Set the field as a longtext.
      *
      * @return $this
      */
