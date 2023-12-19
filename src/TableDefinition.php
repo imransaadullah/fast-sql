@@ -11,4 +11,5 @@ class TableManipulator {
     public function __construct($tableName) {
         $this->tableName = $tableName;
     }
+    
 }
