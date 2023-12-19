@@ -378,6 +378,26 @@ trait Properties {
     }
 
     /**
+     * Set the field as a varchar.
+     *
+     * @return $this
+     */
+    public function varchar() {
+        $this->setType("VARCHAR");
+        return $this;
+    }
+
+    /**
+     * Set the field as a char.
+     *
+     * @return $this
+     */
+    public function char() {
+        $this->setType("CHAR");
+        return $this;
+    }
+
+    /**
      * Set the field as a tinytext.
      *
      * @return $this
