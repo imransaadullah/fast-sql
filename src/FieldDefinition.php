@@ -42,7 +42,7 @@ class FieldDefinition {
 
     
     public function generateFieldStatement() {
-        $sql = "{$this->name} {$this->type}";
+        $sql = "`{$this->name}` {$this->type}";
 
         $options = implode(' ', $this->options);
         if (!empty($options)) {
