@@ -274,7 +274,7 @@ class SecureSQLGenerator
         }
     }
 
-    public function setQuery($selectQuery){
+    public function setQuery(string $selectQuery){
         $this->query = $selectQuery;
         return $this;
     }
