@@ -342,7 +342,7 @@ class SecureSQLGenerator
         $statement->execute();
     }
 
-    protected function isTableCreationQuery()
+    public function isTableCreationQuery()
     {
         return strpos(strtoupper($this->query), 'CREATE TABLE') !== false;
     }
