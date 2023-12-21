@@ -273,6 +273,12 @@ class SecureSQLGenerator
             $this->query = $selectQuery;
         }
     }
+
+    public function setQuery($selectQuery){
+        $this->query = $selectQuery;
+        return $this;
+    }
+
     public function beginTransaction()
     {
         if (!$this->inTransaction) {
