@@ -344,11 +344,8 @@ class SecureSQLGenerator
 
     protected function isTableCreationQuery()
     {
-        // Add your logic to determine if the query is for table creation
-        // For example, check if the query contains certain keywords like CREATE TABLE
         return strpos(strtoupper($this->query), 'CREATE TABLE') !== false;
     }
-
 
     private function clearQuery()
     {
