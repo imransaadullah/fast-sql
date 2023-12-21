@@ -1,6 +1,7 @@
 <?php
 
 namespace FASTSQL;
+
 /**
  * Class SecureSQLGenerator
  *
@@ -308,21 +309,46 @@ class SecureSQLGenerator
         }
 
         try {
-            $statement = $this->pdo->prepare($this->query);
-            $statement->execute($this->params);
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-
-            if ($useCache) {
-                $this->cache[$cacheKey] = $result;
+            if ($this->isTableCreationQuery()) {
+                $this->executeTableCreationQuery();
+                $result = true; // Assuming success for table creation
+            } else {
+                $result = $this->executeSelectQuery();
+                if ($useCache) {
+                    $this->cache[$cacheKey] = $result;
+                }
             }
 
             $this->clearQuery();
             return $result;
         } catch (\PDOException $e) {
-            $this->rollback(); 
+            if (!$this->isTableCreationQuery()) {
+                $this->rollback();
+            }
             throw $e;
         }
     }
+
+    protected function executeSelectQuery()
+    {
+        $statement = $this->pdo->prepare($this->query);
+        $statement->execute($this->params);
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    protected function executeTableCreationQuery()
+    {
+        $statement = $this->pdo->prepare($this->query);
+        $statement->execute();
+    }
+
+    protected function isTableCreationQuery()
+    {
+        // Add your logic to determine if the query is for table creation
+        // For example, check if the query contains certain keywords like CREATE TABLE
+        return strpos(strtoupper($this->query), 'CREATE TABLE') !== false;
+    }
+
 
     private function clearQuery()
     {
