@@ -44,7 +44,15 @@ class FieldDefinition {
     public function generateFieldStatement() {
         $sql = "`{$this->name}` {$this->type}";
 
-        $options = implode(' ', $this->options);
+        $options = implode(' ', 
+            array_filter(
+                $this->options, 
+                function($option) {
+                    return $option !== 'PRIMARY KEY' && $option !== 'UNIQUE';
+                }
+            )
+        );
+        
         if (!empty($options)) {
             $sql .= " $options";
         }
