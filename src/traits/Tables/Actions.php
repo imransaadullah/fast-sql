@@ -171,7 +171,7 @@ trait Actions{
     }
 
     public function getAlterTableStatement() {
-        $sql = "ALTER TABLE {$this->tableName}";
+        $sql = "ALTER TABLE `{$this->tableName}`";
 
         if (isset($this->engine)) {
             $sql .= " ENGINE={$this->engine}";
@@ -193,7 +193,7 @@ trait Actions{
     }
 
     public function getDropTableStatement() {
-        return "DROP TABLE IF EXISTS {$this->tableName};";
+        return "DROP TABLE IF EXISTS `{$this->tableName}`;";
     }
 
     public function getCreateTableStatement() {
@@ -209,7 +209,7 @@ trait Actions{
             $sql .= " IF NOT EXISTS";
         }
 
-        $sql .= " {$this->tableName} (";
+        $sql .= " `{$this->tableName}` (";
 
         $fieldStatements = array();
 
