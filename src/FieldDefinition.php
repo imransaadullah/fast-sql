@@ -7,6 +7,7 @@ use FASTSQL\Traits\Fields\Properties;
 
 class FieldDefinition {
     use Contraints, Properties, Actions;
+    
     /**
      * Constructor for FieldDefinition class.
      *
