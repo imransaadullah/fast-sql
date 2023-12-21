@@ -19,22 +19,7 @@
             "FASTSQL\\": "src/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/your/repo.git"
-        }
-    ],
-    "scripts": {
-        "test": "phpunit"
-    },
-    "config": {
-        "bin-dir": "bin/"
-    },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require-dev": {
-        "phpunit/phpunit": "^8.0"
-    }
+    "prefer-stable": true
 }
 

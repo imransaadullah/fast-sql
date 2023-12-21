@@ -9,6 +9,13 @@ trait Actions{
         return $this;
     }
 
+    public function addFields(array $field) {
+        foreach($field as $field) {
+            $this->addField($field);
+        }
+        return $this;
+    }
+
     public function addIndex($columns, $indexName = null) {
         $index = array('columns' => $columns);
         if ($indexName !== null) {
