@@ -270,4 +270,12 @@ trait Actions{
         }
         return $sql;
     }
+
+    public function getDropTableStatements() {
+        return "DROP `$this->tableName`;";
+    }
+
+    public function getTruncateTableStatements() {
+        return "TRUNCATE `$this->tableName`;";
+    }
 }
