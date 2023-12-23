@@ -316,11 +316,9 @@ class SecureSQLGenerator
 
         try {
             if ($this->isTableCreationQuery()) {
-                $this->executeTableCreationQuery();
-                $result = true; // Assuming success for table creation
+                $result = $this->executeTableCreationQuery();
             }elseif ($this->isInsertQuery()) {
                 $result = $this->executeInsertQuery();
-                // ; // Assuming success for table creation
             } else {
                 $result = $this->executeSelectQuery();
                 if ($useCache) {
