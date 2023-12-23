@@ -348,9 +348,22 @@ class SecureSQLGenerator
         $statement->execute();
     }
 
+    protected function executeInsertQuery()
+    {
+        $statement = $this->pdo->prepare($this->query);
+        $statement->execute($this->params);
+        if ($this->pdo->lastInsertId()) return $this->pdo->lastInsertId();
+        return false;
+    }
+
     public function isTableCreationQuery()
     {
         return strpos(strtoupper($this->query), 'CREATE TABLE') !== false;
+    }
+
+    public function isInsertQuery()
+    {
+        return strpos(strtoupper($this->query), 'INSERT INTO') !== false;
     }
 
     private function clearQuery()
