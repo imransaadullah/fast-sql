@@ -318,6 +318,9 @@ class SecureSQLGenerator
             if ($this->isTableCreationQuery()) {
                 $this->executeTableCreationQuery();
                 $result = true; // Assuming success for table creation
+            }elseif ($this->isInsertQuery()) {
+                $result = $this->executeInsertQuery();
+                // ; // Assuming success for table creation
             } else {
                 $result = $this->executeSelectQuery();
                 if ($useCache) {
@@ -345,7 +348,7 @@ class SecureSQLGenerator
     protected function executeTableCreationQuery()
     {
         $statement = $this->pdo->prepare($this->query);
-        $statement->execute();
+        return $statement->execute();
     }
 
     protected function executeInsertQuery()
