@@ -5,16 +5,9 @@ namespace FASTSQL\Traits\Fields;
 trait Properties {
     private $name;
     private $type;
+    private $length;
+    private $comment;
     private $options = array();
-
-     /**
-     * Get the name of the field.
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
-    }
 
     /**
      * Check if the field has a primary key.
@@ -107,6 +100,7 @@ trait Properties {
      */
     public function comment($comment) {
         $this->options[] = "COMMENT '$comment'";
+        $this->comment = $comment;
         return $this;
     }
 
@@ -119,6 +113,7 @@ trait Properties {
      */
     public function length($length) {
         $this->options[] = "($length)";
+        $this->length = $length;
         return $this;
     }
 

@@ -272,10 +272,10 @@ trait Actions{
     }
 
     public function getDropTableStatements() {
-        return "DROP `$this->tableName`;";
+        return "DROP TABLE `$this->tableName`;";
     }
 
     public function getTruncateTableStatements() {
-        return "TRUNCATE `$this->tableName`;";
+        return "TRUNCATE TABLE `$this->tableName`;";
     }
 }
