@@ -61,7 +61,7 @@ class SecureSQLGenerator
      * @param array|string $columns The columns to select.
      * @return $this
      */
-    public function select($columns)
+    public function select($columns = '*')
     {
         if (!$this->selectAdded) {
             $this->query = "SELECT " . $this->query;

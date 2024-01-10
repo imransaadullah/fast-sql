@@ -28,7 +28,7 @@ composer install
 use progrmanial\FASTSQL\SecureSQLGenerator;
 use PDO;
 
-// Create a PDO instance for database connection
+// Create a PDO instance for mysql database connection
 $pdo = new PDO('mysql:host=localhost;dbname=your_database', 'username', 'password');
 
 // Create an instance of SecureSQLGenerator
