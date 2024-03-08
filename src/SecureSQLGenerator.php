@@ -10,7 +10,7 @@ namespace FASTSQL;
 class SecureSQLGenerator
 {
     /**
-     * @var PDO The PDO instance for database connection.
+     * @var \PDO The PDO instance for database connection.
      */
     protected $pdo;
 
@@ -47,7 +47,7 @@ class SecureSQLGenerator
     /**
      * SecureSQLGenerator constructor.
      *
-     * @param PDO $pdo The PDO instance for database connection.
+     * @param \PDO $pdo The PDO instance for database connection.
      */
     public function __construct(\PDO $pdo)
     {
@@ -491,5 +491,15 @@ class SecureSQLGenerator
     private function generateCacheKey()
     {
         return md5($this->query . json_encode($this->params));
+    }
+
+    /**
+     * Get the generated SQL statement without executing it.
+     *
+     * @return string The generated SQL statement.
+     */
+    public function getGeneratedStatement()
+    {
+        return $this->query;
     }
 }
