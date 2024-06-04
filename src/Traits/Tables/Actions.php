@@ -11,7 +11,11 @@ trait Actions{
 
     public function addFields(array $field) {
         foreach($field as $field) {
-            $this->addField($field);
+            if ($field instanceof \FASTSQL\FieldDefinition) {
+                $this->addField($field);
+            }else{
+                throw new \InvalidArgumentException('Field is not an instance of \FASTSQL\FieldDefinition');
+            }
         }
         return $this;
     }

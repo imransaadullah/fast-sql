@@ -80,7 +80,8 @@ class SecureSQLGenerator
      *
      * @param array|null $columns The columns to select distinct values from.
      * @return $this
-     */    public function distinct($columns = null)
+     */    
+    public function distinct($columns = null)
     {
         if (!$this->selectAdded) {
             $this->query = "SELECT " . $this->query;

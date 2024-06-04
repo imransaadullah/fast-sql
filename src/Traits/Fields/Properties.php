@@ -573,7 +573,7 @@ trait Properties {
      * @return $this
      */
     public function email() {
-        $this->setType("VARCHAR", 255)
+        $this->setType("VARCHAR", 199)
             ->collate("utf8mb4_general_ci");
         return $this;
     }
@@ -584,7 +584,7 @@ trait Properties {
      * @return $this
      */
     public function passwordHash() {
-        $this->setType("VARCHAR", 255);
+        $this->setType("text", 5000);
         return $this;
     }
 
@@ -630,7 +630,7 @@ trait Properties {
      * @return $this
      */
     public function filePath() {
-        $this->setType("VARCHAR", 255);
+        $this->setType("text", 500);
         return $this;
     }
 
@@ -650,7 +650,7 @@ trait Properties {
      * @return $this
      */
     public function url() {
-        $this->setType("VARCHAR", 255);
+        $this->setType("text", 5000);
         return $this;
     }
 
@@ -700,7 +700,7 @@ trait Properties {
      * @return $this
      */
     public function slug() {
-        $this->setType("VARCHAR", 255)
+        $this->setType("text", 5000)
             ->collate("utf8mb4_general_ci");
         return $this;
     }
@@ -762,7 +762,7 @@ trait Properties {
      * @return $this
      */
     public function urlPath() {
-        $this->setType("VARCHAR", 255)
+        $this->setType("text", 5000)
             ->collate("utf8mb4_general_ci");
         return $this;
     }
