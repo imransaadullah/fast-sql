@@ -307,6 +307,10 @@ class SecureSQLGenerator
         return $this;
     }
 
+    public function getLastInsertId() {
+        return $this->pdo->lastInsertId() ?? false;
+    }
+
     public function execute($useCache = false)
     {
         $cacheKey = $this->generateCacheKey();
@@ -354,7 +358,9 @@ class SecureSQLGenerator
     {
         $statement = $this->pdo->prepare($this->query);
         $statement->execute($this->params);
-        if ($this->pdo->lastInsertId()) return $this->pdo->lastInsertId();
+        if ($this->pdo->lastInsertId()) {
+            return $this->pdo->lastInsertId();
+        }
         return false;
     }
 
