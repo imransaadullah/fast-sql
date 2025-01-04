@@ -44,6 +44,8 @@ class SecureSQLGenerator
      */
     private $cache = [];
 
+    protected $hasWhere = false; // Tracks if WHERE has been added
+
     /**
      * SecureSQLGenerator constructor.
      *
@@ -140,15 +142,15 @@ class SecureSQLGenerator
         return $this;
     }
 
-    public function where($conditions)
-    {
-        $whereClause = implode(' AND ', array_map(function ($column, $value) {
-            return $this->sanitizeIdentifier($column) . ' = ' . $this->bindValue($value);
-        }, array_keys($conditions), array_values($conditions)));
+    // public function where($conditions)
+    // {
+    //     $whereClause = implode(' AND ', array_map(function ($column, $value) {
+    //         return $this->sanitizeIdentifier($column) . ' = ' . $this->bindValue($value);
+    //     }, array_keys($conditions), array_values($conditions)));
 
-        $this->query .= " WHERE {$whereClause}";
-        return $this;
-    }
+    //     $this->query .= " WHERE {$whereClause}";
+    //     return $this;
+    // }
 
     public function orderBy($column, $order = 'ASC')
     {
@@ -163,24 +165,81 @@ class SecureSQLGenerator
         return $this;
     }
 
-    public function andWhere($conditions, $compoundOperator = null)
+    // public function andWhere($conditions, $compoundOperator = null)
+    // {
+    //     return $this->addCondition('AND', $conditions, $compoundOperator);
+    // }
+
+    // public function orWhere($conditions, $compoundOperator = null)
+    // {
+    //     return $this->addCondition('OR', $conditions, $compoundOperator);
+    // }
+
+    // public function notWhere($conditions, $compoundOperator = null)
+    // {
+    //     return $this->addCondition('NOT', $conditions, $compoundOperator);
+    // }
+
+    public function where($conditions, $compoundOperator = null, $mode = 'scalar')
     {
-        return $this->addCondition('AND', $conditions, $compoundOperator);
+        // Add WHERE only if not already added
+        if (!$this->hasWhere) {
+            $this->query .= ' WHERE';
+            $this->hasWhere = true;
+        }
+
+        return $this->handleCondition('AND', $conditions, $compoundOperator, $mode);
     }
 
-    public function orWhere($conditions, $compoundOperator = null)
+    public function andWhere($conditions, $compoundOperator = null, $mode = 'scalar')
     {
-        return $this->addCondition('OR', $conditions, $compoundOperator);
+        // Add AND after WHERE or existing AND/OR conditions
+        return $this->handleCondition('AND', $conditions, $compoundOperator, $mode);
     }
 
-    public function notWhere($conditions, $compoundOperator = null)
+    public function orWhere($conditions, $compoundOperator = null, $mode = 'scalar')
     {
-        return $this->addCondition('NOT', $conditions, $compoundOperator);
+        // Add OR after WHERE or existing AND/OR conditions
+        return $this->handleCondition('OR', $conditions, $compoundOperator, $mode);
     }
 
-     /**
-     * Adds a condition with support for scalar values.
-     */
+    public function notWhere($conditions, $compoundOperator = null, $mode = 'scalar')
+    {
+        // Add NOT after WHERE or existing AND/OR conditions
+        return $this->handleCondition('NOT', $conditions, $compoundOperator, $mode);
+    }
+
+    protected function handleCondition($logicalOperator, $conditions, $compoundOperator, $mode)
+    {
+        switch ($mode) {
+            case 'array':
+                return $this->addConditionWithArraySupport($logicalOperator, $conditions, $compoundOperator);
+            case 'generalized':
+                return $this->addGeneralizedCondition($logicalOperator, $conditions, $compoundOperator);
+            default:
+                return $this->addCondition($logicalOperator, $conditions, $compoundOperator);
+        }
+    }
+
+    // protected function addCondition($logicalOperator, $conditions, $compoundOperator = null)
+    // {
+    //     $conditionClause = '';
+    //     foreach ($conditions as $column => $value) {
+    //         $column = $this->sanitizeIdentifier($column);
+    //         $conditionClause .= "{$column} = :{$column} {$logicalOperator} ";
+    //         $this->params[":{$column}"] = $value;
+    //     }
+    //     $conditionClause = rtrim($conditionClause, " {$logicalOperator} ");
+
+    //     if ($compoundOperator) {
+    //         $this->query .= " {$compoundOperator} ({$conditionClause})";
+    //     } else {
+    //         $this->query .= " {$logicalOperator} ({$conditionClause})";
+    //     }
+
+    //     return $this;
+    // }
+
     protected function addCondition($logicalOperator, $conditions, $compoundOperator = null)
     {
         $conditionClause = '';
