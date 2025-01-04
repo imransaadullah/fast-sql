@@ -178,6 +178,9 @@ class SecureSQLGenerator
         return $this->addCondition('NOT', $conditions, $compoundOperator);
     }
 
+     /**
+     * Adds a condition with support for scalar values.
+     */
     protected function addCondition($logicalOperator, $conditions, $compoundOperator = null)
     {
         $conditionClause = '';
@@ -186,6 +189,88 @@ class SecureSQLGenerator
             $conditionClause .= "{$column} = :{$column} {$logicalOperator} ";
             $this->params[":{$column}"] = $value;
         }
+        $conditionClause = rtrim($conditionClause, " {$logicalOperator} ");
+
+        if ($compoundOperator) {
+            $this->query .= " {$compoundOperator} ({$conditionClause})";
+        } else {
+            $this->query .= " {$logicalOperator} ({$conditionClause})";
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds a condition with support for arrays (`IN`, `NOT IN`).
+     */
+    protected function addConditionWithArraySupport($logicalOperator, $conditions, $compoundOperator = null)
+    {
+        $conditionClause = '';
+
+        foreach ($conditions as $column => $value) {
+            $column = $this->sanitizeIdentifier($column);
+
+            if (is_array($value)) {
+                $placeholders = [];
+                foreach ($value as $index => $item) {
+                    $placeholder = ":{$column}_{$index}";
+                    $placeholders[] = $placeholder;
+                    $this->params[$placeholder] = $item;
+                }
+                $conditionClause .= "{$column} IN (" . implode(', ', $placeholders) . ") {$logicalOperator} ";
+            } else {
+                $placeholder = ":{$column}";
+                $conditionClause .= "{$column} = {$placeholder} {$logicalOperator} ";
+                $this->params[$placeholder] = $value;
+            }
+        }
+
+        $conditionClause = rtrim($conditionClause, " {$logicalOperator} ");
+
+        if ($compoundOperator) {
+            $this->query .= " {$compoundOperator} ({$conditionClause})";
+        } else {
+            $this->query .= " {$logicalOperator} ({$conditionClause})";
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds generalized conditions with column, operator, and value.
+     */
+    protected function addGeneralizedCondition($logicalOperator, array $conditions, $compoundOperator = null)
+    {
+        if (empty($conditions)) {
+            throw new \InvalidArgumentException('Conditions array cannot be empty.');
+        }
+
+        $conditionClause = '';
+
+        foreach ($conditions as $condition) {
+            if (!isset($condition['column'], $condition['operator'], $condition['value'])) {
+                throw new \InvalidArgumentException('Each condition must have a column, operator, and value.');
+            }
+
+            $column = $this->sanitizeIdentifier($condition['column']);
+            $operator = strtoupper($condition['operator']);
+            $value = $condition['value'];
+
+            if (is_array($value) && ($operator === 'IN' || $operator === 'NOT IN')) {
+                $placeholders = [];
+                foreach ($value as $index => $item) {
+                    $placeholder = ":{$column}_{$index}";
+                    $placeholders[] = $placeholder;
+                    $this->params[$placeholder] = $item;
+                }
+                $conditionClause .= "{$column} {$operator} (" . implode(', ', $placeholders) . ") {$logicalOperator} ";
+            } else {
+                $placeholder = ":{$column}";
+                $conditionClause .= "{$column} {$operator} {$placeholder} {$logicalOperator} ";
+                $this->params[$placeholder] = $value;
+            }
+        }
+
         $conditionClause = rtrim($conditionClause, " {$logicalOperator} ");
 
         if ($compoundOperator) {
