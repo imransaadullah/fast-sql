@@ -19,7 +19,8 @@
             "FASTSQL\\": "src/"
         }
     },
+    "version": "1.0.1",
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": false
 }
 
